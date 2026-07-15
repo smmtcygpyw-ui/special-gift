@@ -272,7 +272,7 @@ body {
 }
 
 /* ==========================================
-   SCENE 2: THE SECURED ENVELOPE & RIBBON
+   SCENE 2: THE SECURED ENVELOPE
    ========================================== */
 .envelope-wrapper {
     position: relative;
@@ -281,94 +281,6 @@ body {
     perspective: 2000px;
 }
 
-/* The Ribbon Container Sits perfectly on top of the envelope */
-.ribbon-system {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-    pointer-events: auto; /* Active for touch sweeps */
-}
-
-/* Visual vertical ribbon band down the middle */
-.ribbon-bar {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 70px;
-    height: 100%;
-    display: flex;
-    pointer-events: none; /* Let clicks pass through to container */
-}
-
-.ribbon-half {
-    position: absolute;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(to bottom, #d4af37, #aa7c11, #d4af37);
-    border: 1px solid rgba(226, 192, 116, 0.5);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s;
-}
-
-.ribbon-left { 
-    left: 0; 
-    border-right: 1px solid var(--accent-gold-bright); 
-    transform-origin: left center;
-}
-.ribbon-right { 
-    right: 0; 
-    border-left: 1px solid var(--accent-gold-bright); 
-    transform-origin: right center;
-}
-
-.ribbon-glow-line {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    width: 3px;
-    height: 100%;
-    background: var(--accent-gold-bright);
-    box-shadow: 0 0 15px var(--accent-gold-bright);
-    transform: translateX(-50%);
-    pointer-events: none;
-    transition: opacity 0.5s;
-}
-
-.ribbon-prompt {
-    position: absolute;
-    top: -45px;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    font-family: var(--font-serif);
-    font-size: 0.8rem;
-    letter-spacing: 0.15em;
-    color: var(--accent-gold-bright);
-    text-shadow: 0 0 8px rgba(226,192,116,0.5);
-    animation: breathing 2s infinite ease-in-out;
-    pointer-events: none;
-    transition: opacity 0.5s;
-}
-
-/* Sliced Ribbon: Swings wide and dissolves */
-.ribbon-system.sliced .ribbon-left { 
-    transform: rotateY(-110deg) translateX(-60px); 
-    opacity: 0;
-}
-.ribbon-system.sliced .ribbon-right { 
-    transform: rotateY(110deg) translateX(60px); 
-    opacity: 0;
-}
-.ribbon-system.sliced .ribbon-glow-line,
-.ribbon-system.sliced .ribbon-prompt { 
-    opacity: 0; 
-}
-
-/* The Envelope Frame */
 .envelope-container {
     position: absolute;
     width: 100%;
@@ -390,7 +302,7 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: #160f33;
+    background-color: #110b2a;
     border-radius: 8px;
     box-shadow: 0 40px 80px rgba(0, 0, 0, 0.85);
     transform-style: preserve-3d;
@@ -408,7 +320,7 @@ body {
     top: 0;
     left: 0;
     border-width: 150px 220px 0 220px;
-    border-color: #261b54 transparent transparent transparent;
+    border-color: #1e1347 transparent transparent transparent;
     transform-origin: top;
     transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s, z-index 0.2s 0.6s;
 }
@@ -417,14 +329,14 @@ body {
     top: 0;
     left: 0;
     border-width: 145px 0 145px 220px;
-    border-color: transparent transparent transparent #1c1342;
+    border-color: transparent transparent transparent #160e37;
 }
 
 .right-flap {
     top: 0;
     right: 0;
     border-width: 145px 220px 145px 0;
-    border-color: transparent #1c1342 transparent transparent;
+    border-color: transparent #160e37 transparent transparent;
 }
 
 .bottom-pocket {
@@ -433,154 +345,151 @@ body {
     left: 0;
     width: 100%;
     height: 155px;
-    background-color: #19103c;
+    background-color: #130c31;
     z-index: 3;
     border-radius: 0 0 8px 8px;
 }
 
 /* ==========================================
-   CLASSY GEOMETRIC WAX SEAL (ALIGNMENT METHOD)
+   CLASSY CELESTIAL CONVERGENCE SYSTEM (SLIDER)
    ========================================== */
-.wax-seal-wrapper {
+.convergence-system {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -35%) scale(0.6);
-    z-index: 101; /* High stacking priority above envelope pocket */
-    cursor: pointer;
-    opacity: 0;
-    pointer-events: none;
-    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.8s;
+    left: 5%;
+    width: 90%;
+    height: 80px;
+    transform: translateY(-50%);
+    z-index: 100;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 }
 
-.wax-seal-wrapper.unlocked { 
-    opacity: 1;
-    transform: translate(-50%, -35%) scale(1.15);
-    pointer-events: auto; 
-}
-
-.wax-seal-glow {
+/* Elegant Dotted Golden Line Track */
+.orbit-path {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 140px;
-    height: 140px;
+    left: 30px;
+    right: 30px;
+    height: 2px;
+    background: image-set();
+    background-image: linear-gradient(to right, rgba(226, 192, 116, 0.3) 50%, transparent 50%);
+    background-size: 8px 100%;
+    z-index: 1;
+}
+
+/* Solved Glowing Beam that fills as you drag */
+.orbit-fill {
+    position: absolute;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(to right, var(--accent-gold), var(--accent-gold-bright));
+    box-shadow: 0 0 15px var(--accent-gold-bright);
+    transition: width 0.05s linear;
+}
+
+/* The Nodes (Stars) */
+.celestial-node {
+    position: absolute;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(226, 192, 116, 0.35) 0%, rgba(226,192,116,0) 70%);
-    transition: transform 0.3s ease;
-}
-
-/* Outer Geometric Progress Rings */
-.seal-ring-svg {
-    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-90deg);
-    width: 120px;
-    height: 120px;
-    pointer-events: none;
+    transform: translateY(-50%);
 }
 
-.ring-track {
-    fill: none;
-    stroke: rgba(226, 192, 116, 0.15);
-    stroke-width: 2;
+#nodeA {
+    left: 0;
+    cursor: grab;
+    touch-action: none; /* Crucial for preventing iOS Safari scroll conflicts */
 }
 
-.ring-progress {
-    fill: none;
-    stroke: var(--accent-gold);
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-dasharray: 283; /* 2 * PI * r (r=45) -> ~283 */
-    stroke-dashoffset: 283;
-    transition: stroke-dashoffset 0.1s linear, stroke var(--transition-snappy);
-    filter: drop-shadow(0 0 4px var(--accent-gold));
+#nodeA:active {
+    cursor: grabbing;
 }
 
-.wax-seal {
-    position: relative;
-    width: 75px;
-    height: 75px;
+#nodeS {
+    right: 0;
+}
+
+/* Massive touch target around Node A to make grabbing highly robust */
+#nodeA::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: transparent;
+}
+
+.node-pulse {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(226, 192, 116, 0.4);
+    border-radius: 50%;
+    animation: orbitalPulse 2.5s infinite ease-in-out;
+}
+
+.node-core {
+    width: 38px;
+    height: 38px;
     background: radial-gradient(circle, #0e0a24 0%, #03010b 100%);
-    border-radius: 50%;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 2px 5px rgba(226,192,116,0.25);
-    border: 2px solid rgba(226, 192, 116, 0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.seal-monogram {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    font-family: var(--font-serif);
-    font-weight: 500;
+    border: 1px solid var(--accent-gold);
     color: var(--accent-gold-bright);
-    text-shadow: 0 0 8px rgba(226,192,116,0.6);
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 15px rgba(226, 192, 116, 0.45);
+    text-shadow: 0 0 5px rgba(226, 192, 116, 0.8);
+    transition: transform 0.2s;
 }
 
-.seal-monogram .m-letter { 
-    font-size: 1.3rem; 
-    transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s;
-}
-.seal-monogram .m-dot { 
-    font-size: 0.8rem; 
-    color: var(--accent-gold); 
-    transition: opacity 0.5s;
+#nodeA:hover .node-core {
+    transform: scale(1.15);
+    border-color: var(--accent-gold-bright);
+    box-shadow: 0 0 25px rgba(226, 192, 116, 0.85);
 }
 
-.seal-instruction {
+.convergence-prompt {
     position: absolute;
-    bottom: -55px;
+    bottom: -45px;
+    left: 50%;
+    transform: translateX(-50%);
     white-space: nowrap;
     font-family: var(--font-serif);
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     letter-spacing: 0.2em;
     color: var(--accent-gold);
-    opacity: 0.7;
-    transition: opacity 0.3s, transform 0.3s;
+    animation: promptBreathing 2.5s infinite ease-in-out;
     pointer-events: none;
-    animation: breathing 2.5s infinite ease-in-out;
 }
 
-/* Micro-feedback while holding */
-.wax-seal-wrapper.pressing .wax-seal {
-    transform: scale(0.92);
-    border-color: var(--accent-gold-bright);
-}
-.wax-seal-wrapper.pressing .wax-seal-glow {
-    transform: translate(-50%, -50%) scale(1.2);
-}
-.wax-seal-wrapper.pressing .ring-progress {
-    stroke: var(--accent-gold-bright);
-}
-
-/* Elegant dissolution animation */
-.wax-seal-wrapper.shattered {
+/* Dissolve the interaction once fused */
+.convergence-system.fused {
     pointer-events: none;
+    transition: opacity 1s ease;
     opacity: 0;
-    transform: translate(-50%, -35%) scale(1.5);
-    transition: transform 1.4s cubic-bezier(0.19, 1, 0.22, 1), opacity 1.2s ease;
 }
 
-.wax-seal-wrapper.shattered .letter-a {
-    transform: translateX(-50px) rotate(-15deg);
-    opacity: 0;
+@keyframes orbitalPulse {
+    0% { transform: scale(0.9); opacity: 0.2; }
+    50% { transform: scale(1.4); opacity: 0.9; }
+    100% { transform: scale(0.9); opacity: 0.2; }
 }
-.wax-seal-wrapper.shattered .letter-s {
-    transform: translateX(50px) rotate(15deg);
-    opacity: 0;
-}
-.wax-seal-wrapper.shattered .m-dot {
-    opacity: 0;
+
+@keyframes promptBreathing {
+    0%, 100% { opacity: 0.4; transform: translate(-50%, 0) scale(0.97); }
+    50% { opacity: 0.9; transform: translate(-50%, 0) scale(1.03); }
 }
 
 /* Inside Surprise Letter Design */
@@ -590,7 +499,7 @@ body {
     left: 15px;
     width: 410px;
     height: 255px;
-    background: linear-gradient(135deg, #1e153e 0%, #0d0922 100%);
+    background: linear-gradient(135deg, #181135 0%, #0a071d 100%);
     border: 1.5px solid rgba(226, 192, 116, 0.4);
     border-radius: 4px;
     z-index: 2;
@@ -636,11 +545,6 @@ body {
     background: var(--accent-gold);
     color: var(--bg-dark-primary);
     box-shadow: 0 0 25px rgba(226, 192, 116, 0.5);
-}
-
-@keyframes breathing {
-    0%, 100% { opacity: 0.35; transform: scale(0.97); }
-    50% { opacity: 0.85; transform: scale(1.03); }
 }
 
 /* Open Envelope flap mechanics */
@@ -795,8 +699,7 @@ body {
     .bottom-pocket { height: 120px; }
     .letter-card { width: 310px; height: 200px; }
     .envelope-container.open .letter-card { transform: translateY(-110px); }
-    .wax-seal-wrapper { transform: translate(-50%, -35%) scale(0.9); }
     .audio-control { top: 1rem; right: 1rem; padding: 10px 16px; }
-    .ribbon-bar { width: 55px; }
-    .ribbon-prompt { font-size: 0.65rem; top: -35px; }
+    .celestial-node { width: 45px; height: 45px; }
+    .node-core { width: 32px; height: 32px; font-size: 0.85rem; }
 }
