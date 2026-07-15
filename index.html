@@ -2,142 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>A Promise Frozen in Time ✦ Atharv & Sayra</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <!-- Premium Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Cormorant+Garamond:ital,wght=0,300;0,500;1,300;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <title>A Promise ✦</title>
 </head>
 <body>
 
-    <!-- Deep Ambient & Heartbeat Dust Canvas -->
-    <canvas id="ambientCanvas"></canvas>
-
-    <!-- Shockwave & Sparkle Trail Canvas -->
-    <canvas id="trailCanvas"></canvas>
-
-    <!-- Interactive Audio Orb -->
-    <div class="audio-control" id="audioToggle">
-        <div class="audio-pulse"></div>
-        <svg class="audio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path id="speaker-path" d="M11 5L6 9H2v6h4l5 4V5z"/>
-            <path id="sound-waves" class="hidden" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
-        </svg>
-        <span class="audio-label">Sound On</span>
+    <!-- Page 1 -->
+    <div id="page1" class="page active">
+        <div class="content">
+            <h1>Atharv & Sayra</h1>
+            <button id="btn-to-page2">Begin the Journey ✦</button>
+        </div>
     </div>
 
-    <!-- Background Music -->
-    <audio id="bgMusic" loop src="music.mp3" preload="auto"></audio>
-
-    <main class="viewport-wrapper">
-        
-        <!-- ================= SCENE 1: THE COSMIC PROLOGUE ================= -->
-        <section id="scene-1" class="scene active">
-            <div class="scene-content">
-                <div class="cosmic-intro">
-                    <div class="names-constellation">
-                        <span class="constellation-name name-left">Atharv</span>
-                        <span class="constellation-star">✦</span>
-                        <span class="constellation-name name-right">Sayra</span>
-                    </div>
-                    <div class="cinematic-prologue">
-                        <p class="prologue-line line-1">In a universe of fleeting moments...</p>
-                        <h1 class="prologue-hero line-2">Some connections are written in the stars.</h1>
-                        <p class="prologue-sub line-3">Let's pause time, just for a little while.</p>
-                    </div>
-                </div>
-                <div class="button-wrapper delay-ultra">
-                    <button id="btn-to-scene2" class="btn-gold-glow">
-                        Enter Our Space <span>✦</span>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= SCENE 2: THE SECURED ENVELOPE ================= -->
-        <section id="scene-2" class="scene">
-            <div class="scene-content flex-center">
-                <div class="envelope-wrapper">
-                    
-                    <div class="envelope-container" id="envelopeContainer">
-                        <div class="envelope-shadow"></div>
-                        <div class="envelope">
-                            <div class="flap top-flap"></div>
-                            <div class="flap left-flap"></div>
-                            <div class="flap right-flap"></div>
-                            <div class="bottom-pocket"></div>
-                            
-                            <!-- ================= THE CELESTIAL CONVERGENCE SYSTEM ================= -->
-                            <div class="convergence-system" id="convergenceSystem">
-                                <div class="orbit-path">
-                                    <div class="orbit-fill" id="orbitFill"></div>
-                                </div>
-                                
-                                <!-- Draggable Star (Atharv - A) -->
-                                <div class="celestial-node drag-node" id="nodeA">
-                                    <div class="node-pulse"></div>
-                                    <div class="node-core">A</div>
-                                </div>
-
-                                <!-- Stationary Star (Sayra - S) -->
-                                <div class="celestial-node target-node" id="nodeS">
-                                    <div class="node-core">S</div>
-                                </div>
-
-                                <div class="convergence-prompt" id="convergencePrompt">Drag A to S to bridge the distance ✧</div>
-                            </div>
-
-                            <!-- Inside Surprise Card -->
-                            <div class="letter-card" id="letterCard">
-                                <div class="letter-inner">
-                                    <h2 class="letter-heading">For Sayra</h2>
-                                    <p class="letter-subtext">A piece of my heart, kept safe just for you...</p>
-                                    <button id="btn-to-scene3" class="btn-gold-sm">Unfold the Memory</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= SCENE 3: THE PARALLAX MEMORY VIEW ================= -->
-        <section id="scene-3" class="scene">
-            <div class="scene-content">
-                <div class="letter-viewer-container">
-                    <div class="letter-3d-wrapper" id="letter3DWrapper">
-                        <div class="letter-frame">
-                            <div class="frame-inner">
-                                <div class="paper-texture-overlay"></div>
-                                <img id="poemImage" src="poem.png" alt="Handwritten Poem for Sayra" class="poem-photo">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="viewer-actions">
-                        <button id="btn-to-scene4" class="btn-gold-glow">Seal this promise ✧</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= SCENE 4: THE CINEMATIC FINALE ================= -->
-        <section id="scene-4" class="scene">
-            <div class="scene-content text-center">
-                <div class="ending-box">
-                    <p class="ending-text-muted">Atharv ✦ Sayra</p>
-                    <h2 class="ending-highlight">"We will stay friends, come what may."</h2>
-                    <div class="cosmic-signature-glow"></div>
-                    <p class="ending-signature">To the end of time & beyond ✨</p>
-                    <div class="re-reveal-holder">
-                        <button id="btn-restart" class="btn-text-only">Replay the Magic</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
+    <!-- Page 2 -->
+    <div id="page2" class="page">
+        <div class="content">
+            <h2>The Promise</h2>
+            <p>Our story starts here.</p>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
