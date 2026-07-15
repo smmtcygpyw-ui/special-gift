@@ -216,7 +216,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // BULLETPROOF SILK RIBBON SWIPE INTERACTION
     // ==========================================
     const ribbonSystem = document.getElementById("ribbonSystem");
-    const envelopePrompt = document.getElementById("envelopePrompt");
     let isSwiping = false;
     let lastX = null;
 
@@ -224,11 +223,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (ribbonSystem.classList.contains("sliced")) return;
 
         const rect = ribbonSystem.getBoundingClientRect();
-        // Cut triggers exactly when dragging over the center split
         const ribbonMidX = rect.left + rect.width / 2;
 
         if (lastX !== null) {
-            // Checks if movement crossed the mid-point (left-to-right or right-to-left)
             if ((lastX < ribbonMidX && clientX >= ribbonMidX) || (lastX > ribbonMidX && clientX <= ribbonMidX)) {
                 triggerRibbonSlice(clientX, clientY);
             }
@@ -238,22 +235,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function triggerRibbonSlice(x, y) {
         ribbonSystem.classList.add("sliced");
-        playMusic(); // Starts background music instantly upon cutting action
+        playMusic(); 
 
-        // Sparkle explosion along the slash axis
         for (let i = 0; i < 40; i++) {
             particlesArray.push(new ElegantSpark(x, y, 4.5));
         }
 
-        // Bloom Wax Seal into existence
+        // Reveal the Touchstone alignment seal
         setTimeout(() => {
             const waxSeal = document.getElementById("waxSeal");
             waxSeal.classList.add("unlocked");
-            envelopePrompt.classList.add("visible");
         }, 500);
     }
 
-    // Capture dragging finger directly on iPad
+    // Touch event binders for iPad
     ribbonSystem.addEventListener("touchstart", (e) => {
         isSwiping = true;
         const touch = e.touches[0];
@@ -262,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     ribbonSystem.addEventListener("touchmove", (e) => {
         if (!isSwiping) return;
-        e.preventDefault(); // LOCKS Safari scroll bounce while swiping!
+        e.preventDefault(); 
         const touch = e.touches[0];
         handleSwipeCut(touch.clientX, touch.clientY);
     }, { passive: false });
@@ -276,11 +271,100 @@ document.addEventListener("DOMContentLoaded", () => {
     ribbonSystem.addEventListener("mousemove", (e) => {
         handleSwipeCut(e.clientX, e.clientY);
     });
-
-    // Tap-cut backup trigger
     ribbonSystem.addEventListener("click", (e) => {
         triggerRibbonSlice(e.clientX, e.clientY);
     });
+
+
+    // ==========================================
+    // "THE ALIGNMENT" TOUCHSTONE SEAL ENGINE
+    // ==========================================
+    const waxSeal = document.getElementById("waxSeal");
+    const progressCircle = document.getElementById("sealProgressCircle");
+    const sealHoldPrompt = document.getElementById("sealHoldPrompt");
+    
+    let holdInterval = null;
+    let holdProgress = 0; // Ranges 0 to 100%
+    const holdRequiredTime = 1200; // 1.2s total holding requirement
+    const maxOffsetValue = 283; // SVG stroke circumference mapping
+
+    function startAlignment(e) {
+        // Prevent default actions to stop Safari selection menu and context lists from popping up
+        if (e) e.preventDefault();
+        
+        if (!waxSeal.classList.contains("unlocked") || waxSeal.classList.contains("shattered")) return;
+
+        waxSeal.classList.add("pressing");
+        sealHoldPrompt.textContent = "Pausing time...";
+
+        const startTimestamp = Date.now();
+
+        holdInterval = setInterval(() => {
+            const timePassed = Date.now() - startTimestamp;
+            holdProgress = Math.min((timePassed / holdRequiredTime) * 100, 100);
+
+            // Dynamically draw the SVG orbital path
+            const dynamicOffset = maxOffsetValue - (holdProgress / 100) * maxOffsetValue;
+            progressCircle.style.strokeDashoffset = dynamicOffset;
+
+            // Continual sparkle cascade directly below seal while pressing
+            const rect = waxSeal.getBoundingClientRect();
+            sprayTrail(
+                rect.left + rect.width / 2 + (Math.random() * 30 - 15), 
+                rect.top + rect.height / 2 + (Math.random() * 30 - 15)
+            );
+
+            if (holdProgress >= 100) {
+                executeCosmicAlignment();
+            }
+        }, 16);
+    }
+
+    function breakAlignment() {
+        if (waxSeal.classList.contains("shattered")) return;
+        
+        clearInterval(holdInterval);
+        holdProgress = 0;
+        progressCircle.style.strokeDashoffset = maxOffsetValue;
+        waxSeal.classList.remove("pressing");
+        sealHoldPrompt.textContent = "Touch & hold to align the stars ✧";
+    }
+
+    function executeCosmicAlignment() {
+        clearInterval(holdInterval);
+        waxSeal.classList.remove("pressing");
+        waxSeal.classList.add("shattered");
+
+        const rect = waxSeal.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        // Generate planetary scale expanding wave circle
+        shockwaveWaveform = new GoldenShockwave(centerX, centerY);
+
+        // Huge radial dynamic emission of star pieces
+        for (let i = 0; i < 70; i++) {
+            particlesArray.push(new ElegantSpark(centerX, centerY, 8));
+        }
+
+        // Part flaps smoothly
+        setTimeout(() => {
+            envelopeContainer.classList.add("open");
+        }, 800);
+    }
+
+    // iPad / Mobile pointer triggers (Rock Solid Support on iOS Safari)
+    waxSeal.addEventListener("pointerdown", startAlignment);
+    window.addEventListener("pointerup", breakAlignment);
+    waxSeal.addEventListener("pointercancel", breakAlignment);
+    waxSeal.addEventListener("pointerleave", breakAlignment);
+
+    // Standard touch backup fallback
+    waxSeal.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        startAlignment();
+    }, { passive: false });
+    waxSeal.addEventListener("touchend", breakAlignment);
 
 
     // ==========================================
@@ -292,8 +376,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const s4 = document.getElementById("scene-4");
 
     const btnToScene2 = document.getElementById("btn-to-scene2");
-    const waxSeal = document.getElementById("waxSeal");
-    const envelopeContainer = document.getElementById("envelopeContainer");
     const btnToScene3 = document.getElementById("btn-to-scene3");
     const btnToScene4 = document.getElementById("btn-to-scene4");
     const btnRestart = document.getElementById("btn-restart");
@@ -310,32 +392,6 @@ document.addEventListener("DOMContentLoaded", () => {
         switchScene(s1, s2);
     });
 
-    // Wax Seal Monogram Click Break
-    waxSeal.addEventListener("click", (e) => {
-        e.stopPropagation();
-        if (waxSeal.classList.contains("unlocked") && !waxSeal.classList.contains("shattered")) {
-            waxSeal.classList.add("shattered");
-            envelopePrompt.classList.remove("visible");
-
-            const rect = waxSeal.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-
-            // Trigger physical wave shockwave
-            shockwaveWaveform = new GoldenShockwave(centerX, centerY);
-
-            // Ring blast of sparks
-            for (let i = 0; i < 50; i++) {
-                particlesArray.push(new ElegantSpark(centerX, centerY, 6.5));
-            }
-
-            // Open Envelope Flaps
-            setTimeout(() => {
-                envelopeContainer.classList.add("open");
-            }, 700);
-        }
-    });
-
     btnToScene3.addEventListener("click", (e) => {
         e.stopPropagation();
         switchScene(s2, s3);
@@ -345,12 +401,12 @@ document.addEventListener("DOMContentLoaded", () => {
         switchScene(s3, s4);
     });
 
-    // Complete reset
     btnRestart.addEventListener("click", () => {
         waxSeal.classList.remove("shattered", "unlocked");
         envelopeContainer.classList.remove("open");
         ribbonSystem.classList.remove("sliced");
-        envelopePrompt.classList.remove("visible");
+        progressCircle.style.strokeDashoffset = maxOffsetValue;
+        sealHoldPrompt.textContent = "Touch & hold to align the stars ✧";
         switchScene(s4, s1);
     });
 
