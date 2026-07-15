@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Surprise ✨</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Ambient Particle Canvas Background -->
+    <canvas id="ambientCanvas"></canvas>
+
+    <!-- Floating Audio Control -->
+    <div class="audio-control" id="audioToggle">
+        <div class="audio-pulse"></div>
+        <svg class="audio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <!-- Muted state default -->
+            <path id="speaker-path" d="M11 5L6 9H2v6h4l5 4V5z"/>
+            <path id="sound-waves" class="hidden" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        </svg>
+        <span class="audio-label">Play Music</span>
+    </div>
+
+    <!-- Background Music Holder -->
+    <!-- REPLACE 'music.mp3' with your chosen sweet instrumental track -->
+    <audio id="bgMusic" loop src="music.mp3"></audio>
+
+    <main class="viewport-wrapper">
+        
+        <!-- ================= SCENE 1: OPENING ================= -->
+        <section id="scene-1" class="scene active">
+            <div class="scene-content fade-in-group">
+                <p class="greeting-subtitle text-reveal">Hey...</p>
+                <h1 class="greeting-title text-reveal-delay">I made something special for you</h1>
+                <div class="button-wrapper delay-long">
+                    <button id="btn-to-scene2" class="btn-gold-glow">
+                        Open Your Surprise <span>💌</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SCENE 2: GIFT REVEAL (ENVELOPE) ================= -->
+        <section id="scene-2" class="scene">
+            <div class="scene-content flex-center">
+                <div class="envelope-container" id="envelopeContainer">
+                    <div class="envelope-shadow"></div>
+                    <div class="envelope">
+                        <div class="flap top-flap"></div>
+                        <div class="flap left-flap"></div>
+                        <div class="flap right-flap"></div>
+                        <div class="bottom-pocket"></div>
+                        <div class="letter-card" id="letterCard">
+                            <div class="letter-inner">
+                                <h2 class="letter-heading">For You</h2>
+                                <p class="letter-subtext">A collection of moments & thoughts frozen in ink...</p>
+                                <button id="btn-to-scene3" class="btn-gold-sm">Read The Letter</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="envelope-instruction" id="envelopePrompt">
+                    Tap the envelope to open ✧
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SCENE 3: HANDWRITTEN LETTER POEM ================= -->
+        <section id="scene-3" class="scene">
+            <div class="scene-content">
+                <div class="letter-viewer-container">
+                    <div class="letter-frame">
+                        <div class="frame-inner">
+                            <!-- REPLACE 'poem.png' with your actual handwritten poem photo name -->
+                            <img id="poemImage" src="poem.png" alt="Handwritten Poem" class="poem-photo">
+                        </div>
+                    </div>
+                    <div class="viewer-actions">
+                        <button id="btn-to-scene4" class="btn-gold-glow">Continue ✧</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SCENE 4: EMOTIONAL ENDING ================= -->
+        <section id="scene-4" class="scene">
+            <div class="scene-content text-center">
+                <div class="ending-box fade-in-group">
+                    <p class="ending-text-muted">Some feelings are difficult to explain through words...</p>
+                    <h2 class="ending-highlight">But I'm so grateful you're in my life.</h2>
+                    <p class="ending-signature">Thank you for being you ✨</p>
+                    <div class="re-reveal-holder">
+                        <button id="btn-restart" class="btn-text-only">Replay the experience</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
