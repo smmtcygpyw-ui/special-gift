@@ -61,12 +61,15 @@
             <div class="scene-content flex-center">
                 <div class="envelope-wrapper">
                     
-                    <!-- The Golden Silk Ribbon Wrapper -->
+                    <!-- Interactive Golden Ribbon Outer Box -->
                     <div class="ribbon-system" id="ribbonSystem">
-                        <div class="ribbon-half ribbon-left"></div>
-                        <div class="ribbon-half ribbon-right"></div>
-                        <div class="ribbon-glow-line"></div>
-                        <div class="ribbon-prompt" id="ribbonPrompt">Swipe finger across the ribbon to slice ✧</div>
+                        <!-- The actual visible ribbon column -->
+                        <div class="ribbon-bar">
+                            <div class="ribbon-half ribbon-left"></div>
+                            <div class="ribbon-half ribbon-right"></div>
+                            <div class="ribbon-glow-line"></div>
+                        </div>
+                        <div class="ribbon-prompt" id="ribbonPrompt">Swipe left-to-right across ribbon to slice ✧</div>
                     </div>
 
                     <div class="envelope-container" id="envelopeContainer">
@@ -77,8 +80,8 @@
                             <div class="flap right-flap"></div>
                             <div class="bottom-pocket"></div>
                             
-                            <!-- Personalized "A + S" Wax Seal -->
-                            <div class="wax-seal-wrapper locked" id="waxSeal">
+                            <!-- Personalized "A + S" Wax Seal (Starts hidden under ribbon) -->
+                            <div class="wax-seal-wrapper" id="waxSeal">
                                 <div class="wax-seal-glow"></div>
                                 <div class="wax-seal">
                                     <div class="seal-monogram">
@@ -110,7 +113,6 @@
         <section id="scene-3" class="scene">
             <div class="scene-content">
                 <div class="letter-viewer-container">
-                    <!-- Dynamic 3D floating gallery frame -->
                     <div class="letter-3d-wrapper" id="letter3DWrapper">
                         <div class="letter-frame">
                             <div class="frame-inner">
