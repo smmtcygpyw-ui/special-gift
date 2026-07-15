@@ -43,7 +43,7 @@
                         <span class="constellation-name name-right">Sayra</span>
                     </div>
                     <div class="cinematic-prologue">
-                        <p class="prologue-line line-1">In a universe of billions of fleeting moments...</p>
+                        <p class="prologue-line line-1">In a universe of fleeting moments...</p>
                         <h1 class="prologue-hero line-2">Some connections are written in the stars.</h1>
                         <p class="prologue-sub line-3">Let's pause time, just for a little while.</p>
                     </div>
@@ -69,7 +69,7 @@
                             <div class="ribbon-half ribbon-right"></div>
                             <div class="ribbon-glow-line"></div>
                         </div>
-                        <div class="ribbon-prompt" id="ribbonPrompt">Swipe left-to-right across ribbon to slice ✧</div>
+                        <div class="ribbon-prompt" id="ribbonPrompt">Swipe across ribbon to slice ✧</div>
                     </div>
 
                     <div class="envelope-container" id="envelopeContainer">
@@ -80,16 +80,24 @@
                             <div class="flap right-flap"></div>
                             <div class="bottom-pocket"></div>
                             
-                            <!-- Personalized "A + S" Wax Seal (Starts hidden under ribbon) -->
+                            <!-- Cosmic Alignment Wax Seal (Starts hidden under ribbon) -->
                             <div class="wax-seal-wrapper" id="waxSeal">
                                 <div class="wax-seal-glow"></div>
+                                
+                                <!-- Orbital Geometry Progress Ring -->
+                                <svg class="seal-ring-svg" viewBox="0 0 100 100">
+                                    <circle class="ring-track" cx="50" cy="50" r="45"></circle>
+                                    <circle class="ring-progress" cx="50" cy="50" r="45" id="sealProgressCircle"></circle>
+                                </svg>
+
                                 <div class="wax-seal">
                                     <div class="seal-monogram">
-                                        <span class="m-letter">A</span>
+                                        <span class="m-letter letter-a">A</span>
                                         <span class="m-dot">✦</span>
-                                        <span class="m-letter">S</span>
+                                        <span class="m-letter letter-s">S</span>
                                     </div>
                                 </div>
+                                <div class="seal-instruction" id="sealHoldPrompt">Touch & hold to align the stars ✧</div>
                             </div>
 
                             <!-- Inside Surprise Card -->
@@ -102,9 +110,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="envelope-instruction" id="envelopePrompt">
-                    Break the golden monogram seal ✧
                 </div>
             </div>
         </section>
