@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>A Promise Frozen in Time ✨</title>
+    <title>A Promise Frozen in Time ✦ Atharv & Sayra</title>
     <link rel="stylesheet" href="style.css">
     <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Ambient & Touch Particle Canvas -->
+    <!-- Deep Ambient & Heartbeat Dust Canvas -->
     <canvas id="ambientCanvas"></canvas>
 
-    <!-- Interactive Sparkle Trail Canvas -->
+    <!-- Shockwave & Sparkle Trail Canvas -->
     <canvas id="trailCanvas"></canvas>
 
-    <!-- Floating Audio Control -->
+    <!-- Interactive Audio Orb -->
     <div class="audio-control" id="audioToggle">
         <div class="audio-pulse"></div>
         <svg class="audio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path id="speaker-path" d="M11 5L6 9H2v6h4l5 4V5z"/>
             <path id="sound-waves" class="hidden" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
         </svg>
-        <span class="audio-label">Music On</span>
+        <span class="audio-label">Sound On</span>
     </div>
 
     <!-- Background Music -->
@@ -33,26 +33,42 @@
 
     <main class="viewport-wrapper">
         
-        <!-- ================= SCENE 1: CINEMATIC INTRO ================= -->
+        <!-- ================= SCENE 1: THE COSMIC PROLOGUE ================= -->
         <section id="scene-1" class="scene active">
             <div class="scene-content">
-                <div class="intro-text-container">
-                    <p class="greeting-subtitle text-reveal">Hey...</p>
-                    <h1 class="greeting-title text-reveal-delay">I wanted to pause time for a moment.</h1>
-                    <p class="intro-lead delay-longest">Because some connections are simply too precious to keep in ordinary thoughts...</p>
+                <div class="cosmic-intro">
+                    <div class="names-constellation">
+                        <span class="constellation-name name-left">Atharv</span>
+                        <span class="constellation-star">✦</span>
+                        <span class="constellation-name name-right">Sayra</span>
+                    </div>
+                    <div class="cinematic-prologue">
+                        <p class="prologue-line line-1">In a universe of billions of fleeting moments...</p>
+                        <h1 class="prologue-hero line-2">Some connections are written in the stars.</h1>
+                        <p class="prologue-sub line-3">Let's pause time, just for a little while.</p>
+                    </div>
                 </div>
                 <div class="button-wrapper delay-ultra">
                     <button id="btn-to-scene2" class="btn-gold-glow">
-                        Begin the Journey <span>✦</span>
+                        Enter Our Space <span>✦</span>
                     </button>
                 </div>
             </div>
         </section>
 
-        <!-- ================= SCENE 2: THE GOLDEN WAX SEAL ================= -->
+        <!-- ================= SCENE 2: THE SECURED ENVELOPE ================= -->
         <section id="scene-2" class="scene">
             <div class="scene-content flex-center">
                 <div class="envelope-wrapper">
+                    
+                    <!-- The Golden Silk Ribbon Wrapper -->
+                    <div class="ribbon-system" id="ribbonSystem">
+                        <div class="ribbon-half ribbon-left"></div>
+                        <div class="ribbon-half ribbon-right"></div>
+                        <div class="ribbon-glow-line"></div>
+                        <div class="ribbon-prompt" id="ribbonPrompt">Swipe finger across the ribbon to slice ✧</div>
+                    </div>
+
                     <div class="envelope-container" id="envelopeContainer">
                         <div class="envelope-shadow"></div>
                         <div class="envelope">
@@ -61,59 +77,65 @@
                             <div class="flap right-flap"></div>
                             <div class="bottom-pocket"></div>
                             
-                            <!-- Interactive Wax Seal -->
-                            <div class="wax-seal-wrapper" id="waxSeal">
+                            <!-- Personalized "A + S" Wax Seal -->
+                            <div class="wax-seal-wrapper locked" id="waxSeal">
                                 <div class="wax-seal-glow"></div>
                                 <div class="wax-seal">
-                                    <span class="seal-heart">❤</span>
+                                    <div class="seal-monogram">
+                                        <span class="m-letter">A</span>
+                                        <span class="m-dot">✦</span>
+                                        <span class="m-letter">S</span>
+                                    </div>
                                 </div>
                             </div>
 
+                            <!-- Inside Surprise Card -->
                             <div class="letter-card" id="letterCard">
                                 <div class="letter-inner">
-                                    <h2 class="letter-heading">For You</h2>
-                                    <p class="letter-subtext">A promise written in ink, meant to stay forever warm...</p>
-                                    <button id="btn-to-scene3" class="btn-gold-sm">Unfold the Words</button>
+                                    <h2 class="letter-heading">For Sayra</h2>
+                                    <p class="letter-subtext">A piece of my heart, kept safe just for you...</p>
+                                    <button id="btn-to-scene3" class="btn-gold-sm">Unfold the Memory</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="envelope-instruction" id="envelopePrompt">
-                    Tap the golden seal to break the lock ✧
+                    Break the golden monogram seal ✧
                 </div>
             </div>
         </section>
 
-        <!-- ================= SCENE 3: 3D FLOATING POEM ================= -->
+        <!-- ================= SCENE 3: THE PARALLAX MEMORY VIEW ================= -->
         <section id="scene-3" class="scene">
             <div class="scene-content">
                 <div class="letter-viewer-container">
-                    <!-- The Interactive 3D Frame -->
+                    <!-- Dynamic 3D floating gallery frame -->
                     <div class="letter-3d-wrapper" id="letter3DWrapper">
                         <div class="letter-frame">
                             <div class="frame-inner">
                                 <div class="paper-texture-overlay"></div>
-                                <img id="poemImage" src="poem.png" alt="Handwritten Poem" class="poem-photo">
+                                <img id="poemImage" src="poem.png" alt="Handwritten Poem for Sayra" class="poem-photo">
                             </div>
                         </div>
                     </div>
                     <div class="viewer-actions">
-                        <button id="btn-to-scene4" class="btn-gold-glow">Keep this promise ✧</button>
+                        <button id="btn-to-scene4" class="btn-gold-glow">Seal this promise ✧</button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ================= SCENE 4: THE CINEMATIC ENDING ================= -->
+        <!-- ================= SCENE 4: THE CINEMATIC FINALE ================= -->
         <section id="scene-4" class="scene">
             <div class="scene-content text-center">
                 <div class="ending-box">
-                    <p class="ending-text-muted">No matter what the future holds...</p>
+                    <p class="ending-text-muted">Atharv ✦ Sayra</p>
                     <h2 class="ending-highlight">"We will stay friends, come what may."</h2>
-                    <p class="ending-signature">Always & Forever ✨</p>
+                    <div class="cosmic-signature-glow"></div>
+                    <p class="ending-signature">To the end of time & beyond ✨</p>
                     <div class="re-reveal-holder">
-                        <button id="btn-restart" class="btn-text-only">Begin Again</button>
+                        <button id="btn-restart" class="btn-text-only">Replay the Magic</button>
                     </div>
                 </div>
             </div>
