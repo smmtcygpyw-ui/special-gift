@@ -247,7 +247,6 @@ body {
     animation: slideInName 2s ease-out forwards 2.4s;
 }
 
-/* Premium Gold Button */
 .btn-gold-glow {
     background: linear-gradient(135deg, rgba(20, 14, 40, 0.95) 0%, rgba(6, 4, 15, 0.98) 100%);
     border: 1px solid var(--accent-gold);
@@ -282,7 +281,7 @@ body {
     perspective: 2000px;
 }
 
-/* Golden Physical Silk Ribbon Mechanics */
+/* The Ribbon Container Sits perfectly on top of the envelope */
 .ribbon-system {
     position: absolute;
     top: 0;
@@ -290,37 +289,58 @@ body {
     width: 100%;
     height: 100%;
     z-index: 100;
-    pointer-events: auto;
+    pointer-events: auto; /* Active for touch sweeps */
+}
+
+/* Visual vertical ribbon band down the middle */
+.ribbon-bar {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 100%;
+    display: flex;
+    pointer-events: none; /* Let clicks pass through to container */
 }
 
 .ribbon-half {
     position: absolute;
     width: 50%;
     height: 100%;
-    background: linear-gradient(to right, rgba(226, 192, 116, 0.95), rgba(161, 124, 48, 0.95));
-    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
-    transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+    background: linear-gradient(to bottom, #d4af37, #aa7c11, #d4af37);
+    border: 1px solid rgba(226, 192, 116, 0.5);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s;
 }
 
-.ribbon-left { left: 0; transform-origin: left; border-right: 2px solid var(--accent-gold-bright); }
-.ribbon-right { right: 0; transform-origin: right; border-left: 2px solid var(--accent-gold-bright); }
+.ribbon-left { 
+    left: 0; 
+    border-right: 1px solid var(--accent-gold-bright); 
+    transform-origin: left center;
+}
+.ribbon-right { 
+    right: 0; 
+    border-left: 1px solid var(--accent-gold-bright); 
+    transform-origin: right center;
+}
 
 .ribbon-glow-line {
     position: absolute;
     left: 50%;
     top: 0;
-    width: 4px;
+    width: 3px;
     height: 100%;
     background: var(--accent-gold-bright);
-    box-shadow: 0 0 20px var(--accent-gold-bright);
+    box-shadow: 0 0 15px var(--accent-gold-bright);
     transform: translateX(-50%);
     pointer-events: none;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.5s;
 }
 
 .ribbon-prompt {
     position: absolute;
-    top: -50px;
+    top: -45px;
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
@@ -328,17 +348,27 @@ body {
     font-size: 0.8rem;
     letter-spacing: 0.15em;
     color: var(--accent-gold-bright);
-    text-shadow: 0 0 10px rgba(226,192,116,0.6);
+    text-shadow: 0 0 8px rgba(226,192,116,0.5);
     animation: breathing 2s infinite ease-in-out;
+    pointer-events: none;
+    transition: opacity 0.5s;
 }
 
-/* Once Ribbon Sliced Open */
-.ribbon-system.sliced .ribbon-left { transform: rotateY(-110deg) scaleX(0); }
-.ribbon-system.sliced .ribbon-right { transform: rotateY(110deg) scaleX(0); }
+/* Sliced Ribbon: Swings wide and dissolves */
+.ribbon-system.sliced .ribbon-left { 
+    transform: rotateY(-110deg) translateX(-60px); 
+    opacity: 0;
+}
+.ribbon-system.sliced .ribbon-right { 
+    transform: rotateY(110deg) translateX(60px); 
+    opacity: 0;
+}
 .ribbon-system.sliced .ribbon-glow-line,
-.ribbon-system.sliced .ribbon-prompt { opacity: 0; pointer-events: none; }
+.ribbon-system.sliced .ribbon-prompt { 
+    opacity: 0; 
+}
 
-/* The Envelope Container */
+/* The Envelope Frame */
 .envelope-container {
     position: absolute;
     width: 100%;
@@ -408,19 +438,24 @@ body {
     border-radius: 0 0 8px 8px;
 }
 
-/* WAX SEAL - MONOGRAM MECHANICS (A + S) */
+/* WAX SEAL - Starts hidden & locked, fades in dynamically once ribbon sliced */
 .wax-seal-wrapper {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -35%) scale(1.1);
+    transform: translate(-50%, -35%) scale(0.6);
     z-index: 10;
     cursor: pointer;
-    transition: var(--transition-snappy);
-    pointer-events: none; /* Locked until ribbon sliced */
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.8s;
 }
 
-.wax-seal-wrapper.unlocked { pointer-events: auto; }
+.wax-seal-wrapper.unlocked { 
+    opacity: 1;
+    transform: translate(-50%, -35%) scale(1.1);
+    pointer-events: auto; 
+}
 
 .wax-seal-glow {
     position: absolute;
@@ -465,14 +500,14 @@ body {
 .seal-monogram .m-letter { font-size: 1.15rem; }
 .seal-monogram .m-dot { font-size: 0.7rem; color: var(--accent-gold-bright); }
 
-/* Shattered State */
+/* Shattered Seal State */
 .wax-seal-wrapper.shattered {
     transform: translate(-50%, -35%) scale(1.8);
     opacity: 0;
     pointer-events: none;
 }
 
-/* Internal Luxury Card */
+/* Inside Surprise Letter Design */
 .letter-card {
     position: absolute;
     bottom: 12px;
@@ -533,6 +568,11 @@ body {
     letter-spacing: 0.25em;
     color: var(--accent-gold);
     margin-top: 2.5rem;
+    opacity: 0; /* Keeps hidden until Ribbon is opened */
+    transition: opacity 0.5s;
+}
+
+.envelope-instruction.visible {
     opacity: 0.6;
     animation: breathing 2.5s infinite ease-in-out;
 }
@@ -542,7 +582,7 @@ body {
     50% { opacity: 0.85; transform: scale(1.03); }
 }
 
-/* Open Envelope States */
+/* Open Envelope flap mechanics */
 .envelope-container.open .top-flap {
     transform: rotateX(180deg);
     z-index: 1;
@@ -696,4 +736,6 @@ body {
     .envelope-container.open .letter-card { transform: translateY(-110px); }
     .wax-seal-wrapper { transform: translate(-50%, -35%) scale(0.9); }
     .audio-control { top: 1rem; right: 1rem; padding: 10px 16px; }
+    .ribbon-bar { width: 55px; }
+    .ribbon-prompt { font-size: 0.65rem; top: -35px; }
 }
