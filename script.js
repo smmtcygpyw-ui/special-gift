@@ -65,7 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
             this.opacity = this.baseOpacity;
         }
         update(pulseFactor) {
-            // Stars flow upwards but pulse size & speed with the heartbeat
             this.y -= this.baseSpeed * (1 + pulseFactor * 0.4);
             this.x += this.speedX;
             this.opacity = this.baseOpacity * (1 + pulseFactor * 0.35);
@@ -86,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ==========================================
-    // TRAIL & SHOCKWAVE GRAPHICS SYSTEM (TOUCH EXPLOSION)
+    // TRAIL & SHOCKWAVE GRAPHICS SYSTEM
     // ==========================================
     const trailCanvas = document.getElementById("trailCanvas");
     const tctx = trailCanvas.getContext("2d");
@@ -100,7 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", resizeTrail);
     resizeTrail();
 
-    // High fidelity Gold Sparkle Spark
     class ElegantSpark {
         constructor(x, y, power) {
             this.x = x;
@@ -132,7 +130,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Shockwave Ripple class for when wax seal cracks
     class GoldenShockwave {
         constructor(x, y) {
             this.x = x;
@@ -145,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
         update() {
             this.radius += this.speed;
             this.opacity = 1 - (this.radius / this.maxRadius);
-            this.speed *= 0.98; // Natural expansion friction
+            this.speed *= 0.98; 
         }
         draw() {
             tctx.save();
@@ -160,7 +157,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Touch handlers to spray spark trail
     function sprayTrail(x, y) {
         for (let i = 0; i < 3; i++) {
             particlesArray.push(new ElegantSpark(x, y, 1.8));
@@ -173,17 +169,12 @@ document.addEventListener("DOMContentLoaded", () => {
         sprayTrail(touch.clientX, touch.clientY);
     });
 
-    // Dynamic Render Engine Processing Loop
     function render() {
-        // Calculate the Slow Rhythmic Heartbeat pulse
         pulseProgress += 0.015;
-        // Simulates human sinus rhythm heartbeat mapping (fast thump, slower recovery)
         const heartbeatFactor = Math.abs(Math.sin(pulseProgress) * Math.sin(pulseProgress * 0.5));
 
-        // Clear Ambient Layer
         actx.clearRect(0, 0, ambientCanvas.width, ambientCanvas.height);
         
-        // Deep Ambient Radial Gold Vignette
         const radialVignette = actx.createRadialGradient(
             ambientCanvas.width / 2, ambientCanvas.height / 2, 40,
             ambientCanvas.width / 2, ambientCanvas.height / 2, ambientCanvas.width
@@ -193,16 +184,13 @@ document.addEventListener("DOMContentLoaded", () => {
         actx.fillStyle = radialVignette;
         actx.fillRect(0, 0, ambientCanvas.width, ambientCanvas.height);
 
-        // Update background dust particles in sync with the pulse
         ambientParticles.forEach(p => {
             p.update(heartbeatFactor);
             p.draw();
         });
 
-        // Clear Interaction Overlays
         tctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
 
-        // Update shockwaves
         if (shockwaveWaveform) {
             shockwaveWaveform.update();
             shockwaveWaveform.draw();
@@ -211,7 +199,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        // Update sparkles
         particlesArray.forEach((s, idx) => {
             s.update();
             s.draw();
@@ -226,47 +213,71 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ==========================================
-    // INTERACTIVE SILK RIBBON SWIPE-TO-CUT
+    // BULLETPROOF SILK RIBBON SWIPE INTERACTION
     // ==========================================
     const ribbonSystem = document.getElementById("ribbonSystem");
+    const envelopePrompt = document.getElementById("envelopePrompt");
     let isSwiping = false;
+    let lastX = null;
 
     function handleSwipeCut(clientX, clientY) {
         if (ribbonSystem.classList.contains("sliced")) return;
 
         const rect = ribbonSystem.getBoundingClientRect();
-        // Check if touch/drag is moving over the vertical middle golden split
+        // Cut triggers exactly when dragging over the center split
         const ribbonMidX = rect.left + rect.width / 2;
-        if (Math.abs(clientX - ribbonMidX) < 35) {
-            triggerRibbonSlice(clientX, clientY);
+
+        if (lastX !== null) {
+            // Checks if movement crossed the mid-point (left-to-right or right-to-left)
+            if ((lastX < ribbonMidX && clientX >= ribbonMidX) || (lastX > ribbonMidX && clientX <= ribbonMidX)) {
+                triggerRibbonSlice(clientX, clientY);
+            }
         }
+        lastX = clientX;
     }
 
     function triggerRibbonSlice(x, y) {
         ribbonSystem.classList.add("sliced");
-        playMusic(); // Direct trigger starting background music seamlessly
+        playMusic(); // Starts background music instantly upon cutting action
 
-        // Explode sparks along the cut axis
-        for (let i = 0; i < 45; i++) {
+        // Sparkle explosion along the slash axis
+        for (let i = 0; i < 40; i++) {
             particlesArray.push(new ElegantSpark(x, y, 4.5));
         }
 
-        // Unlock the A + S Monogram Seal now that ribbon is destroyed
+        // Bloom Wax Seal into existence
         setTimeout(() => {
-            document.getElementById("waxSeal").classList.add("unlocked");
-        }, 300);
+            const waxSeal = document.getElementById("waxSeal");
+            waxSeal.classList.add("unlocked");
+            envelopePrompt.classList.add("visible");
+        }, 500);
     }
 
-    // Capture dragging fingers on tablet screen
-    ribbonSystem.addEventListener("touchstart", () => { isSwiping = true; });
+    // Capture dragging finger directly on iPad
+    ribbonSystem.addEventListener("touchstart", (e) => {
+        isSwiping = true;
+        const touch = e.touches[0];
+        lastX = touch.clientX;
+    }, { passive: false });
+
     ribbonSystem.addEventListener("touchmove", (e) => {
         if (!isSwiping) return;
+        e.preventDefault(); // LOCKS Safari scroll bounce while swiping!
         const touch = e.touches[0];
         handleSwipeCut(touch.clientX, touch.clientY);
-    });
+    }, { passive: false });
+
     ribbonSystem.addEventListener("touchend", () => { isSwiping = false; });
 
-    // Fallback click helper to slice ribbon smoothly
+    // Desktop/Mouse dragging fallback
+    ribbonSystem.addEventListener("mouseenter", (e) => {
+        lastX = e.clientX;
+    });
+    ribbonSystem.addEventListener("mousemove", (e) => {
+        handleSwipeCut(e.clientX, e.clientY);
+    });
+
+    // Tap-cut backup trigger
     ribbonSystem.addEventListener("click", (e) => {
         triggerRibbonSlice(e.clientX, e.clientY);
     });
@@ -299,28 +310,28 @@ document.addEventListener("DOMContentLoaded", () => {
         switchScene(s1, s2);
     });
 
-    // Step 3: Interactive Monogram Seal Break & Shockwave
+    // Wax Seal Monogram Click Break
     waxSeal.addEventListener("click", (e) => {
         e.stopPropagation();
         if (waxSeal.classList.contains("unlocked") && !waxSeal.classList.contains("shattered")) {
             waxSeal.classList.add("shattered");
+            envelopePrompt.classList.remove("visible");
 
             const rect = waxSeal.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
 
-            // Trigger physical Golden Ring wave shockwave
+            // Trigger physical wave shockwave
             shockwaveWaveform = new GoldenShockwave(centerX, centerY);
 
-            // Explode intense fireworks of stars
+            // Ring blast of sparks
             for (let i = 0; i < 50; i++) {
-                particlesArray.push(new ElegantSpark(centerX, centerY, 6));
+                particlesArray.push(new ElegantSpark(centerX, centerY, 6.5));
             }
 
-            // Open Envelope flaps
+            // Open Envelope Flaps
             setTimeout(() => {
                 envelopeContainer.classList.add("open");
-                document.getElementById("envelopePrompt").style.opacity = "0";
             }, 700);
         }
     });
@@ -334,12 +345,12 @@ document.addEventListener("DOMContentLoaded", () => {
         switchScene(s3, s4);
     });
 
-    // Complete Reset
+    // Complete reset
     btnRestart.addEventListener("click", () => {
         waxSeal.classList.remove("shattered", "unlocked");
         envelopeContainer.classList.remove("open");
         ribbonSystem.classList.remove("sliced");
-        document.getElementById("envelopePrompt").style.opacity = "0.6";
+        envelopePrompt.classList.remove("visible");
         switchScene(s4, s1);
     });
 
@@ -353,7 +364,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const halfWidth = window.innerWidth / 2;
         const halfHeight = window.innerHeight / 2;
         
-        // Exquisite smooth tilt angles on dragging axes
         const tiltX = -(y - halfHeight) / 22;
         const tiltY = (x - halfWidth) / 22;
 
