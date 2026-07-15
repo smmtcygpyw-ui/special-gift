@@ -135,21 +135,21 @@ document.addEventListener("DOMContentLoaded", () => {
             this.x = x;
             this.y = y;
             this.radius = 0;
-            this.maxRadius = Math.max(window.innerWidth, window.innerHeight) * 0.8;
+            this.maxRadius = Math.max(window.innerWidth, window.innerHeight) * 0.9;
             this.opacity = 1;
-            this.speed = 10;
+            this.speed = 12;
         }
         update() {
             this.radius += this.speed;
             this.opacity = 1 - (this.radius / this.maxRadius);
-            this.speed *= 0.98; 
+            this.speed *= 0.985; 
         }
         draw() {
             tctx.save();
-            tctx.strokeStyle = `rgba(226, 192, 116, ${this.opacity * 0.55})`;
-            tctx.lineWidth = 4 * (1 - this.radius / this.maxRadius);
-            tctx.shadowBlur = 15;
-            tctx.shadowColor = "rgba(226, 192, 116, 0.4)";
+            tctx.strokeStyle = `rgba(226, 192, 116, ${this.opacity * 0.65})`;
+            tctx.lineWidth = 5 * (1 - this.radius / this.maxRadius);
+            tctx.shadowBlur = 20;
+            tctx.shadowColor = "rgba(226, 192, 116, 0.5)";
             tctx.beginPath();
             tctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
             tctx.stroke();
@@ -213,158 +213,150 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ==========================================
-    // BULLETPROOF SILK RIBBON SWIPE INTERACTION
+    // CELESTIAL CONVERGENCE INTERACTION ENGINE
     // ==========================================
-    const ribbonSystem = document.getElementById("ribbonSystem");
-    let isSwiping = false;
-    let lastX = null;
+    const convergenceSystem = document.getElementById("convergenceSystem");
+    const nodeA = document.getElementById("nodeA");
+    const nodeS = document.getElementById("nodeS");
+    const orbitFill = document.getElementById("orbitFill");
+    const convergencePrompt = document.getElementById("convergencePrompt");
+    const envelopeContainer = document.getElementById("envelopeContainer");
 
-    function handleSwipeCut(clientX, clientY) {
-        if (ribbonSystem.classList.contains("sliced")) return;
+    let isDragging = false;
+    let startX = 0;
+    let currentLeft = 0;
+    let maxDragDistance = 0;
 
-        const rect = ribbonSystem.getBoundingClientRect();
-        const ribbonMidX = rect.left + rect.width / 2;
-
-        if (lastX !== null) {
-            if ((lastX < ribbonMidX && clientX >= ribbonMidX) || (lastX > ribbonMidX && clientX <= ribbonMidX)) {
-                triggerRibbonSlice(clientX, clientY);
-            }
-        }
-        lastX = clientX;
+    function initConvergenceMetrics() {
+        const systemWidth = convergenceSystem.clientWidth;
+        const nodeWidth = nodeA.clientWidth;
+        // Total path length between left and right edges minus node sizes
+        maxDragDistance = systemWidth - nodeWidth;
     }
 
-    function triggerRibbonSlice(x, y) {
-        ribbonSystem.classList.add("sliced");
-        playMusic(); 
+    // Initialize metrics on layout
+    setTimeout(initConvergenceMetrics, 200);
+    window.addEventListener("resize", initConvergenceMetrics);
 
-        for (let i = 0; i < 40; i++) {
-            particlesArray.push(new ElegantSpark(x, y, 4.5));
-        }
-
-        // Reveal the Touchstone alignment seal
-        setTimeout(() => {
-            const waxSeal = document.getElementById("waxSeal");
-            waxSeal.classList.add("unlocked");
-        }, 500);
-    }
-
-    // Touch event binders for iPad
-    ribbonSystem.addEventListener("touchstart", (e) => {
-        isSwiping = true;
-        const touch = e.touches[0];
-        lastX = touch.clientX;
-    }, { passive: false });
-
-    ribbonSystem.addEventListener("touchmove", (e) => {
-        if (!isSwiping) return;
-        e.preventDefault(); 
-        const touch = e.touches[0];
-        handleSwipeCut(touch.clientX, touch.clientY);
-    }, { passive: false });
-
-    ribbonSystem.addEventListener("touchend", () => { isSwiping = false; });
-
-    // Desktop/Mouse dragging fallback
-    ribbonSystem.addEventListener("mouseenter", (e) => {
-        lastX = e.clientX;
-    });
-    ribbonSystem.addEventListener("mousemove", (e) => {
-        handleSwipeCut(e.clientX, e.clientY);
-    });
-    ribbonSystem.addEventListener("click", (e) => {
-        triggerRibbonSlice(e.clientX, e.clientY);
-    });
-
-
-    // ==========================================
-    // "THE ALIGNMENT" TOUCHSTONE SEAL ENGINE
-    // ==========================================
-    const waxSeal = document.getElementById("waxSeal");
-    const progressCircle = document.getElementById("sealProgressCircle");
-    const sealHoldPrompt = document.getElementById("sealHoldPrompt");
-    
-    let holdInterval = null;
-    let holdProgress = 0; // Ranges 0 to 100%
-    const holdRequiredTime = 1200; // 1.2s total holding requirement
-    const maxOffsetValue = 283; // SVG stroke circumference mapping
-
-    function startAlignment(e) {
-        // Prevent default actions to stop Safari selection menu and context lists from popping up
-        if (e) e.preventDefault();
+    function handleDragStart(clientX) {
+        if (convergenceSystem.classList.contains("fused")) return;
+        isDragging = true;
+        startX = clientX - currentLeft;
+        playMusic();
         
-        if (!waxSeal.classList.contains("unlocked") || waxSeal.classList.contains("shattered")) return;
-
-        waxSeal.classList.add("pressing");
-        sealHoldPrompt.textContent = "Pausing time...";
-
-        const startTimestamp = Date.now();
-
-        holdInterval = setInterval(() => {
-            const timePassed = Date.now() - startTimestamp;
-            holdProgress = Math.min((timePassed / holdRequiredTime) * 100, 100);
-
-            // Dynamically draw the SVG orbital path
-            const dynamicOffset = maxOffsetValue - (holdProgress / 100) * maxOffsetValue;
-            progressCircle.style.strokeDashoffset = dynamicOffset;
-
-            // Continual sparkle cascade directly below seal while pressing
-            const rect = waxSeal.getBoundingClientRect();
-            sprayTrail(
-                rect.left + rect.width / 2 + (Math.random() * 30 - 15), 
-                rect.top + rect.height / 2 + (Math.random() * 30 - 15)
-            );
-
-            if (holdProgress >= 100) {
-                executeCosmicAlignment();
-            }
-        }, 16);
+        // Visual class while dragging
+        nodeA.querySelector(".node-core").style.transform = "scale(1.2)";
     }
 
-    function breakAlignment() {
-        if (waxSeal.classList.contains("shattered")) return;
+    function handleDragMove(clientX) {
+        if (!isDragging) return;
+
+        let newLeft = clientX - startX;
         
-        clearInterval(holdInterval);
-        holdProgress = 0;
-        progressCircle.style.strokeDashoffset = maxOffsetValue;
-        waxSeal.classList.remove("pressing");
-        sealHoldPrompt.textContent = "Touch & hold to align the stars ✧";
+        // Restrict drag strictly to track boundaries
+        newLeft = Math.max(0, Math.min(newLeft, maxDragDistance));
+        currentLeft = newLeft;
+
+        // Position A Node
+        nodeA.style.left = `${currentLeft}px`;
+
+        // Calculate progress percentage
+        const progressPercent = (currentLeft / maxDragDistance) * 100;
+        orbitFill.style.width = `${progressPercent}%`;
+
+        // Interactive dynamic text feedback
+        if (progressPercent > 75) {
+            convergencePrompt.textContent = "Almost there... ✧";
+        } else if (progressPercent > 35) {
+            convergencePrompt.textContent = "Closing the gap... ✦";
+        } else {
+            convergencePrompt.textContent = "Bridging the distance... ✧";
+        }
+
+        // Spray stellar sparks on drag path
+        const rect = nodeA.getBoundingClientRect();
+        sprayTrail(rect.left + rect.width / 2, rect.top + rect.height / 2);
+
+        // Check Convergence point
+        if (progressPercent >= 98) {
+            triggerConvergence();
+        }
     }
 
-    function executeCosmicAlignment() {
-        clearInterval(holdInterval);
-        waxSeal.classList.remove("pressing");
-        waxSeal.classList.add("shattered");
+    function handleDragEnd() {
+        if (!isDragging) return;
+        isDragging = false;
+        nodeA.querySelector(".node-core").style.transform = "scale(1)";
 
-        const rect = waxSeal.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
+        // If not aligned, snap elegant star 'A' smoothly back to home
+        if (!convergenceSystem.classList.contains("fused")) {
+            nodeA.style.transition = "left 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+            orbitFill.style.transition = "width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+            
+            currentLeft = 0;
+            nodeA.style.left = "0px";
+            orbitFill.style.width = "0%";
+            convergencePrompt.textContent = "Drag A to S to bridge the distance ✧";
 
-        // Generate planetary scale expanding wave circle
-        shockwaveWaveform = new GoldenShockwave(centerX, centerY);
+            setTimeout(() => {
+                nodeA.style.transition = "";
+                orbitFill.style.transition = "";
+            }, 500);
+        }
+    }
 
-        // Huge radial dynamic emission of star pieces
+    function triggerConvergence() {
+        isDragging = false;
+        convergenceSystem.classList.add("fused");
+
+        const rectS = nodeS.getBoundingClientRect();
+        const mergeX = rectS.left + rectS.width / 2;
+        const mergeY = rectS.top + rectS.height / 2;
+
+        // Generate spectacular physical shockwave
+        shockwaveWaveform = new GoldenShockwave(mergeX, mergeY);
+
+        // Explode beautiful sparks at touchpoint
         for (let i = 0; i < 70; i++) {
-            particlesArray.push(new ElegantSpark(centerX, centerY, 8));
+            particlesArray.push(new ElegantSpark(mergeX, mergeY, 8));
         }
 
-        // Part flaps smoothly
+        // Open Envelope smoothly
         setTimeout(() => {
             envelopeContainer.classList.add("open");
         }, 800);
     }
 
-    // iPad / Mobile pointer triggers (Rock Solid Support on iOS Safari)
-    waxSeal.addEventListener("pointerdown", startAlignment);
-    window.addEventListener("pointerup", breakAlignment);
-    waxSeal.addEventListener("pointercancel", breakAlignment);
-    waxSeal.addEventListener("pointerleave", breakAlignment);
-
-    // Standard touch backup fallback
-    waxSeal.addEventListener("touchstart", (e) => {
+    // Unified Pointer Events (Highly reliable on mobile and iPad Safari)
+    nodeA.addEventListener("pointerdown", (e) => {
         e.preventDefault();
-        startAlignment();
+        handleDragStart(e.clientX);
+    });
+
+    window.addEventListener("pointermove", (e) => {
+        handleDragMove(e.clientX);
+    });
+
+    window.addEventListener("pointerup", () => {
+        handleDragEnd();
+    });
+
+    // Native iOS Safari touch fallbacks
+    nodeA.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        const touch = e.touches[0];
+        handleDragStart(touch.clientX);
     }, { passive: false });
-    waxSeal.addEventListener("touchend", breakAlignment);
+
+    window.addEventListener("touchmove", (e) => {
+        if (!isDragging) return;
+        const touch = e.touches[0];
+        handleDragMove(touch.clientX);
+    }, { passive: true });
+
+    window.addEventListener("touchend", () => {
+        handleDragEnd();
+    });
 
 
     // ==========================================
@@ -384,6 +376,9 @@ document.addEventListener("DOMContentLoaded", () => {
         fromScene.classList.remove("active");
         setTimeout(() => {
             toScene.classList.add("active");
+            if (toScene === s2) {
+                initConvergenceMetrics(); // Re-measure track bounds when showing
+            }
         }, 1600);
     }
 
@@ -402,11 +397,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     btnRestart.addEventListener("click", () => {
-        waxSeal.classList.remove("shattered", "unlocked");
+        convergenceSystem.classList.remove("fused");
         envelopeContainer.classList.remove("open");
-        ribbonSystem.classList.remove("sliced");
-        progressCircle.style.strokeDashoffset = maxOffsetValue;
-        sealHoldPrompt.textContent = "Touch & hold to align the stars ✧";
+        currentLeft = 0;
+        nodeA.style.left = "0px";
+        orbitFill.style.width = "0%";
+        convergencePrompt.textContent = "Drag A to S to bridge the distance ✧";
         switchScene(s4, s1);
     });
 
