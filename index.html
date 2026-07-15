@@ -8,7 +8,7 @@
     <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Cormorant+Garamond:ital,wght=0,300;0,500;1,300;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -61,17 +61,6 @@
             <div class="scene-content flex-center">
                 <div class="envelope-wrapper">
                     
-                    <!-- Interactive Golden Ribbon Outer Box -->
-                    <div class="ribbon-system" id="ribbonSystem">
-                        <!-- The actual visible ribbon column -->
-                        <div class="ribbon-bar">
-                            <div class="ribbon-half ribbon-left"></div>
-                            <div class="ribbon-half ribbon-right"></div>
-                            <div class="ribbon-glow-line"></div>
-                        </div>
-                        <div class="ribbon-prompt" id="ribbonPrompt">Swipe across ribbon to slice ✧</div>
-                    </div>
-
                     <div class="envelope-container" id="envelopeContainer">
                         <div class="envelope-shadow"></div>
                         <div class="envelope">
@@ -80,24 +69,24 @@
                             <div class="flap right-flap"></div>
                             <div class="bottom-pocket"></div>
                             
-                            <!-- Cosmic Alignment Wax Seal (Starts hidden under ribbon) -->
-                            <div class="wax-seal-wrapper" id="waxSeal">
-                                <div class="wax-seal-glow"></div>
-                                
-                                <!-- Orbital Geometry Progress Ring -->
-                                <svg class="seal-ring-svg" viewBox="0 0 100 100">
-                                    <circle class="ring-track" cx="50" cy="50" r="45"></circle>
-                                    <circle class="ring-progress" cx="50" cy="50" r="45" id="sealProgressCircle"></circle>
-                                </svg>
-
-                                <div class="wax-seal">
-                                    <div class="seal-monogram">
-                                        <span class="m-letter letter-a">A</span>
-                                        <span class="m-dot">✦</span>
-                                        <span class="m-letter letter-s">S</span>
-                                    </div>
+                            <!-- ================= THE CELESTIAL CONVERGENCE SYSTEM ================= -->
+                            <div class="convergence-system" id="convergenceSystem">
+                                <div class="orbit-path">
+                                    <div class="orbit-fill" id="orbitFill"></div>
                                 </div>
-                                <div class="seal-instruction" id="sealHoldPrompt">Touch & hold to align the stars ✧</div>
+                                
+                                <!-- Draggable Star (Atharv - A) -->
+                                <div class="celestial-node drag-node" id="nodeA">
+                                    <div class="node-pulse"></div>
+                                    <div class="node-core">A</div>
+                                </div>
+
+                                <!-- Stationary Star (Sayra - S) -->
+                                <div class="celestial-node target-node" id="nodeS">
+                                    <div class="node-core">S</div>
+                                </div>
+
+                                <div class="convergence-prompt" id="convergencePrompt">Drag A to S to bridge the distance ✧</div>
                             </div>
 
                             <!-- Inside Surprise Card -->
